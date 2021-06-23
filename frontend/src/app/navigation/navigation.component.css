@@ -1,0 +1,45 @@
+.form-control {
+  width: 300px;
+}
+#typeahead-template{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin-right: 2.5rem;
+  width: 12rem;
+  color: white;
+}
+img{
+  height: 6vh;
+  width: 5vw;
+}
+.navbar{
+  background-color: black;
+}
+
+::ng-deep .dropdown-item{
+  background-color:rgb(9, 45, 99);
+}
+::ng-deep .dropdown-menu{
+  background-color:rgb(9, 45, 99);
+  border: 1px solid white;
+}
+
+/* For mobile  */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 600px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  ::ng-deep .bg-dark{
+    background-color: black !important;
+  }
+  /* ::ng-deep .dropdown-menu{
+    background-color:rgb(9, 45, 99);
+    border: 1px solid white;
+  } */
+}
+
+

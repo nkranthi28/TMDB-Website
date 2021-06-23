@@ -1,0 +1,62 @@
+#headline{
+    min-height:80vh !important;
+    color: white;
+    padding-top: 15vh;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+#content-heading{
+    color: white;
+    padding-top: 5vh;
+    font-family: Arial, sans-serif;
+}
+#full-length{
+ min-height:82vh;
+ padding-left: 5vw;
+}
+#list-card:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+#list-card-caption{
+    opacity: 0;
+    visibility: hidden;
+  }
+  #list-card:hover #list-card-caption{
+    opacity:1;
+    visibility: visible;
+    font-size: 0.8rem;
+    margin-bottom: -1.3rem;
+    margin-left: -0.815rem;
+    background-image: linear-gradient(to bottom,rgba(255,0,0,0), rgba(0,0,0),rgba(0,0,0));
+  }
+  #space{
+      margin-bottom:6rem;
+  }
+
+  /* Mobile CSS */
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 600px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #full-length{
+      min-height:82vh;
+      padding-right: 5rem;
+      padding-left: 5rem;
+     }
+     #list-card-caption{
+      opacity:1;
+      visibility: visible;
+      font-size: 0.8rem;
+      width:90%;
+      margin-bottom: -1.3rem;
+      margin-left: -1.7rem;
+      background-image: linear-gradient(to bottom,rgba(255,0,0,0), rgba(0,0,0),rgba(0,0,0));
+    }
+    #headline{
+      min-height:72.5vh;
+      color: white;
+      padding-top: 15vh;
+      text-align: center;
+  }
+  }

@@ -1,0 +1,27 @@
+<span *ngIf="this.mobile_check === true;">
+  <ngb-carousel class="mobile-carousel">
+    <ng-template ngbSlide *ngFor="let values of carousel">
+      <div class="indicators">
+        <div class="container" id="carousel_id-mobile">
+          <img [routerLink]="['/watch','movie',values.id]" [src]="values.backdrop_path" alt="first slide" width="100%">
+          <div class="carousel-caption" id="caption-carousel-mobile">
+            <span id='span-caption-mobile'>{{values.title}}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</span>
+
+<span *ngIf="this.mobile_check === false;">
+<ngb-carousel>
+  <ng-template ngbSlide *ngFor="let values of carousel">
+    <div class="container" id="carousel_id">
+      <img [routerLink]="['/watch','movie',values.id]" [src]="values.backdrop_path" alt="first slide" width="100%">
+      <div class="carousel-caption" id="caption-carousel">
+        <span id='span-caption'>{{values.title}}</span>
+      </div>
+    </div>
+  </ng-template>
+</ngb-carousel>
+</span>

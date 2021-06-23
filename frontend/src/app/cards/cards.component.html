@@ -1,0 +1,286 @@
+<!-- For mobile -->
+<span *ngIf="this.mobile_check === true;">
+  <!-- Continue watching movies -->
+  <span *ngIf="watch_final_array.length>0;">
+    <h1>Continue <br> Watching</h1><br>
+    <ngb-carousel [interval]=0 class="carousel">
+      <ng-template ngbSlide *ngFor="let values of watch">
+        <div class="container">
+          <div class="row">
+            <!-- <div class="" *ngFor="let val of values"> -->
+              <div class="col-sm">
+                <img class="card-img-top" [routerLink]="['/watch',values.media_type,values.id]" [src]="values.poster_path" alt="Card image cap">
+                <div class="carousel-caption">
+                  <p>{{values.title}}</p>
+                </div>
+              </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </span>
+  <br><br><br>
+
+  <!-- Popular movies -->
+  <h1>Popular Movies</h1><br>
+  <ngb-carousel [interval]=0>
+    <ng-template ngbSlide *ngFor="let val of popular">
+      <div class="container" id="card-arrow">
+        <div class="row">
+          <!-- <div class="" *ngFor="let x of val"> -->
+            <div class="col-sm">
+              <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+              <div class="carousel-caption" >
+                <p>{{val.title}}</p>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+  <br><br><br>
+
+  <!-- top rated movie -->
+<h1>Top Rated Movies</h1><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of top_rated">
+    <div class="container">
+    <div class="row">
+    <!-- <div class="" *ngFor="let val of values"> -->
+      <div class="col-sm">
+        <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+<br><br><br>
+
+<!-- trending movie -->
+<h1>Trending Movies</h1><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of trending">
+    <div class="container">
+    <div class="row">
+    <!-- <div class="" *ngFor="let val of values"> -->
+      <div class="col-sm">
+        <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+<br><br><br>
+
+<!-- popular tv -->
+<h1>Popular TV <br> Shows</h1><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of popular_tv">
+    <div class="container">
+    <div class="row">
+    <!-- <div class="" *ngFor="let val of values"> -->
+      <div class="col-sm">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+<br><br><br>
+
+<!-- popular tv -->
+<h1>Top Rated TV Shows</h1><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of top_rated_tv">
+    <div class="container">
+    <div class="row">
+    <!-- <div class="" *ngFor="let val of values"> -->
+      <div class="col-sm">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+<br><br><br>
+
+<!-- trending tv shows -->
+<h1>Trending TV Shows</h1><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of trending_tv">
+    <div class="container">
+    <div class="row">
+    <!-- <div class="" *ngFor="let val of values"> -->
+      <div class="col-sm">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" id="caption">
+          {{val.title}}
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+</span>
+
+
+
+
+
+
+<!-- For Desktop -->
+<span *ngIf="this.mobile_check === false;">
+<!-- Continue watching movies -->
+<span *ngIf="watch_final_array.length>0;">
+  <h3>Continue Watching</h3><br>
+  <ngb-carousel [interval]=0>
+    <ng-template ngbSlide *ngFor="let values of watch_final_array">
+      <div class="container">
+        <div class="row">
+          <div class="" *ngFor="let val of values">
+            <div class="col-sm" id="col-sm-continue"style="width: 11.8rem;">
+              <img class="card-img-top" [routerLink]="['/watch',val.media_type,val.id]" [src]="val.poster_path" alt="Card image cap">
+              <div class="carousel-caption" id="carousel-caption-continue" style="width: 10rem;">
+                <p>{{val.title}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</span>
+
+<!-- Popular movies -->
+<h3>Popular Movies</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let val of final_array">
+    <div class="container" id="card-arrow">
+      <div class="row">
+        <div class="" *ngFor="let x of val">
+          <div class="col-sm" style="width: 11.8rem;">
+            <img class="card-img-top" [routerLink]="['/watch','movie',x.id]" [src]="x.poster_path" alt="Card image cap">
+            <div class="carousel-caption" style="width: 10rem;">
+              <p>{{x.title}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<!-- top rated movie -->
+<h3>Top Rated Movies</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let values of final_top_rated_array">
+    <div class="container">
+    <div class="row">
+    <div class="" *ngFor="let val of values">
+      <div class="col-sm" style="width: 11.8rem;">
+        <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" style="width: 10rem;">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+
+<!-- trending movie -->
+<h3>Trending Movies</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let values of final_trending_array">
+    <div class="container">
+    <div class="row">
+    <div class="" *ngFor="let val of values">
+      <div class="col-sm" style="width: 11.8rem;">
+        <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" style="width: 10rem;">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+
+<!-- popular tv -->
+<h3>Popular TV Shows</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let values of final_popular_tv_array">
+    <div class="container">
+    <div class="row">
+    <div class="" *ngFor="let val of values">
+      <div class="col-sm" style="width: 11.8rem;">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" style="width: 10rem;">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+
+<!-- popular tv -->
+<h3>Top Rated TV Shows</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let values of final_top_rated_tv_array">
+    <div class="container">
+    <div class="row">
+    <div class="" *ngFor="let val of values">
+      <div class="col-sm" style="width: 11.8rem;">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" style="width: 10rem;">
+          <p>{{val.title}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+
+<!-- trending tv shows -->
+<h3>Trending TV Shows</h3><br>
+<ngb-carousel [interval]=0>
+  <ng-template ngbSlide *ngFor="let values of final_trending_tv_array">
+    <div class="container">
+    <div class="row">
+    <div class="" *ngFor="let val of values">
+      <div class="col-sm" style="width: 11.8rem;">
+        <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+        <div class="carousel-caption" id="caption" style="width: 10rem;">
+          {{val.title}}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+</ngb-carousel>
+</span>

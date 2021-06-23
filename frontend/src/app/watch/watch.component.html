@@ -1,0 +1,608 @@
+<!-- Mobile View -->
+<span *ngIf="this.mobile_check === true;">
+  <html>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" nonce="lKqmDPaK"></script>
+    <script></script>
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="embed-responsive embed-responsive-16by9">
+            <youtube-player
+              videoId = "{{video?.key}}"
+              suggestedQuality="highres"
+              [startSeconds]="4"
+              [endSeconds]="8">
+            </youtube-player>
+          </div>
+        </div>
+        <div class="col-sm-3" id="description">
+          <h2>{{details?.original_title}}</h2>
+          <i><span style="color:rgb(200,200,200);">{{details?.tagline}}</span></i>
+          <br><br>
+          <span *ngIf="details?.release_date;" style="color:rgb(200,200,200);">
+            {{details?.release_date}}
+            &nbsp;|&nbsp;
+          </span>
+          <span style="font-size:80%;color:rgb(200,200,200);">&#9733;</span>
+          <span style="color:rgb(200,200,200);">
+            &nbsp;{{details?.vote_average}}
+            &nbsp;|&nbsp;
+          </span>
+            <span *ngIf="details?.runtime_hours;" style="color:rgb(200,200,200);">
+              {{details?.runtime_hours}}hrs&nbsp;
+            </span>
+            <span *ngIf="details?.runtime_minutes;" style="color:rgb(200,200,200);">{{details?.runtime_minutes}}mins</span>
+          <br><br>
+          Genres : <span style="color:rgb(200,200,200);">{{details?.genres}}</span>
+          <br>
+          Spoken Languages : <span style="color:rgb(200,200,200);">{{details?.spoken_languages}}</span>
+          <br><br>
+          <button id="toggle" (click)="addToList(details.poster_path, details.original_title, media_type, id)">{{text}}</button>
+          <br><br>
+          <span *ngIf="success">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                Added to watchlist.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="clickClose()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </span>
+          <span *ngIf="danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Removed from watchlist.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="clickClose()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </span>
+          <br>
+        </div>
+      </div>
+      <br>
+      <div class="row-sm">
+        <div class="col-sm">
+          <h5>Description</h5>
+          <!-- <br> -->
+          <span style="color:rgb(200,200,200);">{{details?.overview}}</span>
+        </div>
+      </div>
+      <div class="row-sm">
+        <div class="col-sm">
+          <br><br>
+          <h5>Share</h5>
+          <a target="_blank" href="https://twitter.com/intent/tweet?text=Watch%20{{details?.original_title}}%20https://www.youtube.com/watch?v={{video?.key}} %20%23USC%20%23CSCI571%20%23FightOn">
+            <img alt="follow me on twitter" src="https://c866088.ssl.cf3.rackcdn.com/assets/twitter40x40.png" border=0></a>&nbsp;
+          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.youtube.com/watch?v={{video?.key}}" class="fb-xfbml-parse-ignore">
+            <img alt="follow me on facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/facebook40x40.png" border=0></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <br><br>
+          <div class="container-cast">
+            <h3>Full Cast and Crew</h3>
+            <div class="row-sm" id="row">
+              <div class="card" id="card" *ngFor="let card of cast">
+                  <!-- <p>{{card.id}}</p> -->
+                  <img id="img" (click)="openLg(content,card.id)" src="{{card.profile_path}}">
+                  <span class="card-text" id="casttext"><b>{{card.original_name}}</b><br><b>AS</b><br>{{card.character}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+    <!-- reviews -->
+      <div class="container">
+        <h3>Reviews&nbsp;&nbsp;&nbsp;<span class="text-muted">{{reviewslength}}</span></h3>
+        <div class="card" id="reviewcard" *ngFor="let review of reviews" style="margin-bottom: 1%;">
+        <div class="row">
+          <div class="col-sm-3">
+            <img class= "rounded-circle" src="{{review.avatar_path}}">
+          </div>
+          <div class="col-sm-9">
+            <div class="row-sm">
+              <h4 class="card-text" id="createdby">A review created by {{review.author}}&nbsp;&nbsp;<span class="rating">&#9733;&nbsp;{{review.rating}}</span></h4>
+            </div>
+            <div class="row-sm" style="margin-top: 2em;">
+              <span class="time text-muted"> Written by {{review.author}} on {{review.created_at_month}}&nbsp;{{review.created_at_date}},&nbsp;{{review.created_at_year}},&nbsp;{{review.created_at_time}}</span>
+            </div>
+            <br>
+            <div class="row-sm">
+              <span class="reviewcontent">{{review.content}}</span>
+            </div>
+            <br>
+            <div class="row-sm">
+              <a class="urllink" href="{{review.url}}">Read the rest</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    <span *ngIf="recmd();">
+        <div class="container">
+          <div class="row">
+            <span *ngIf="this.media_type == 'movie'" id="caption">
+              <h2>Recommended Movies</h2>
+            </span>
+            <span *ngIf="this.media_type == 'tv'" id="caption">
+              <h2>Recommended <br> TV Shows</h2>
+            </span>
+          </div>
+          <br>
+          <span *ngIf="this.media_type == 'movie'">
+          <ngb-carousel [interval]=0 class="carousel">
+            <ng-template ngbSlide *ngFor="let val of recommended">
+              <div class="container">
+              <div class="row">
+              <!-- <div class="" *ngFor="let val of values"> -->
+                <div class="col" id= "recommended">
+                  <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+                  <div class="carousel-caption" id="recommended-caption">
+                    <p>{{val.title}}</p>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </ng-template>
+          </ngb-carousel>
+        </span>
+        <span *ngIf="this.media_type == 'tv'">
+          <ngb-carousel [interval]=0>
+            <ng-template ngbSlide *ngFor="let val of recommended">
+              <div class="container" class="carousel">
+              <div class="row">
+              <!-- <div class="" *ngFor="let val of values"> -->
+                <div class="col" id= "recommended">
+                  <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+                  <div class="carousel-caption" id="recommended-caption">
+                    <p>{{val.title}}</p>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </ng-template>
+          </ngb-carousel>
+        </span>
+        </div>
+      </span>
+      <br><br>
+      <span *ngIf="smlr();">
+      <div class="container">
+        <div class="row">
+          <span *ngIf="this.media_type == 'movie'" id="caption">
+            <h2>Similar Movies</h2>
+          </span>
+          <span *ngIf="this.media_type == 'tv'">
+            <h2>Similar TV Shows</h2>
+          </span>
+        </div>
+        <br>
+        <span *ngIf="this.media_type == 'movie'" id="caption">
+          <ngb-carousel [interval]=0 class="carousel">
+            <ng-template ngbSlide *ngFor="let val of similar">
+              <div class="container">
+              <div class="row">
+              <!-- <div class="" *ngFor="let val of values"> -->
+                <div class="col" id= "similar">
+                  <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+                  <div class="carousel-caption" id="similar-caption">
+                    <p>{{val.title}}</p>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </div>
+            </div>
+          </ng-template>
+          </ngb-carousel>
+        </span>
+
+        <span *ngIf="this.media_type == 'tv'">
+        <ngb-carousel [interval]=0>
+          <ng-template ngbSlide *ngFor="let val of similar">
+            <div class="container" class="carousel">
+            <div class="row">
+            <!-- <div class="" *ngFor="let val of values"> -->
+              <div class="col" id= "similar">
+                <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+                <div class="carousel-caption" id="similar-caption">
+                  <p>{{val.title}}</p>
+                </div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </ng-template>
+        </ngb-carousel>
+      </span>
+      </div>
+      </span>
+    </div>
+      <!-- <modal> -->
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">{{cast_details?.name}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                  <img style="height:20em;width:13em"src="{{cast_details?.profile_path}}">
+                </div>
+                <div class="col-sm-8">
+                  <div *ngIf="cast_details?.birthday;">
+                    Birth: {{cast_details?.birthday}}<br>
+                  </div>
+                  <div *ngIf="cast_details?.place_of_birth;">
+                    Birth Place: {{cast_details?.place_of_birth}}<br>
+                  </div>
+                  <div *ngIf="cast_details?.gender;">
+                    Gender: {{cast_details?.gender}}<br>
+                  </div>
+                  <div *ngIf="cast_details?.known_for_department;">
+                    Known for: {{cast_details?.known_for_department}}<br>
+                  </div>
+                  <div *ngIf="cast_details?.also_known_as;">
+                    Also Known as: {{cast_details?.also_known_as}}<br><br>
+                  </div>
+                  <br>
+                  <span *ngIf="cast_externals?.imdb_id;">
+                    <a target="_blank" href={{cast_externals?.imdb_id}}><img style="height: 8%; width:5%;" title="Visit IMDB" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwDJDcf3ggp48cpjrgf1nsTUPc6SPq3-CedfgK8Sgh61f0wf6gyPA6YJkiVERomfAGP3w&usqp=CAU" border=0></a>&nbsp;
+                  </span>
+                  <span *ngIf="cast_externals?.instagram_id;">
+                    <a target="_blank" href={{cast_externals?.instagram_id}}><img style="height: 8%; width:5%;" title="Visit Instagram" src="https://www.pngitem.com/pimgs/m/461-4618525_ig-small-instagram-logo-2019-hd-png-download.png" border=0></a>&nbsp;
+                  </span>
+                  <span *ngIf="cast_externals?.facebook_id;">
+                    <a target="_blank" href={{cast_externals?.facebook_id}}><img style="height: 8%; width:5%;" title="Visit Facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/facebook40x40.png" border=0></a>&nbsp;
+                  </span>
+                  <span *ngIf="cast_externals?.twitter_id;">
+                    <a target="_blank" href={{cast_externals?.twitter_id}}><img style="height: 8%; width:5%;" title="Visit Twitter" src="https://c866088.ssl.cf3.rackcdn.com/assets/twitter40x40.png" border=0></a>&nbsp;
+                  </span>
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <span *ngIf="cast_details?.biography;">
+                    <h5>Biography</h5>
+                    {{cast_details?.biography}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #longContent let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Modal title</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+          </div>
+        </ng-template>
+
+      <!-- </modal> -->
+
+    </div>
+    </html>
+</span>
+
+
+<!-- Desktop view -->
+<span *ngIf="this.mobile_check === false;">
+<html>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" nonce="lKqmDPaK"></script>
+<script></script>
+<br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <div class="embed-responsive embed-responsive-16by9">
+        <youtube-player
+          videoId = "{{video?.key}}"
+          suggestedQuality="highres"
+          [startSeconds]="4"
+          [endSeconds]="8">
+        </youtube-player>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <h2>{{details?.original_title}}</h2>
+      <i><span style="color:rgb(200,200,200);">{{details?.tagline}}</span></i>
+      <br><br>
+      <span *ngIf="details?.release_date;" style="color:rgb(200,200,200);">
+        {{details?.release_date}}
+        &nbsp;|&nbsp;
+      </span>
+      <span style="font-size:80%;color:rgb(200,200,200);">&#9733;</span>
+      <span style="color:rgb(200,200,200);">
+        &nbsp;{{details?.vote_average}}
+        &nbsp;|&nbsp;
+      </span>
+        <span *ngIf="details?.runtime_hours;" style="color:rgb(200,200,200);">
+          {{details?.runtime_hours}}hrs&nbsp;
+        </span>
+        <span *ngIf="details?.runtime_minutes;" style="color:rgb(200,200,200);">{{details?.runtime_minutes}}mins</span>
+      <br><br>
+      Genres : <span style="color:rgb(200,200,200);">{{details?.genres}}</span>
+      <br>
+      Spoken Languages : <span style="color:rgb(200,200,200);">{{details?.spoken_languages}}</span>
+      <br><br>
+      <button id="toggle" (click)="addToList(details.poster_path, details.original_title, media_type, id)">{{text}}</button>
+      <br><br>
+      <span *ngIf="success">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            Added to watchlist.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="clickClose()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </span>
+      <span *ngIf="danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Removed from watchlist.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="clickClose()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </span>
+      <br>
+    </div>
+  </div>
+  <br>
+  <div class="row-sm">
+    <div class="col-sm">
+      <h5>Description</h5>
+      <!-- <br> -->
+      <span style="color:rgb(200,200,200);">{{details?.overview}}</span>
+    </div>
+  </div>
+  <div class="row-sm">
+    <div class="col-sm">
+      <br><br>
+      <h5>Share</h5>
+      <a target="_blank" href="https://twitter.com/intent/tweet?text=Watch%20{{details?.original_title}}%20https://www.youtube.com/watch?v={{video?.key}} %20%23USC%20%23CSCI571%20%23FightOn">
+        <img alt="follow me on twitter" src="https://c866088.ssl.cf3.rackcdn.com/assets/twitter40x40.png" border=0></a>&nbsp;
+      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.youtube.com/watch?v={{video?.key}}" class="fb-xfbml-parse-ignore">
+        <img alt="follow me on facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/facebook40x40.png" border=0></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <br><br>
+      <div class="container">
+        <h3>Full Cast and Crew</h3>
+        <div class="row-sm" id="row">
+          <div class="card" id="card" *ngFor="let card of cast">
+              <!-- <p>{{card.id}}</p> -->
+              <img id="img" (click)="openLg(content,card.id)" src="{{card.profile_path}}">
+              <span class="card-text" id="casttext"><b>{{card.original_name}}</b><br><b>AS</b><br>{{card.character}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+<!-- reviews -->
+  <div class="container">
+    <h3>Reviews&nbsp;&nbsp;&nbsp;<span class="text-muted">{{reviewslength}}</span></h3>
+    <div class="card" id="reviewcard" *ngFor="let review of reviews" style="margin-bottom: 1%;">
+    <div class="row">
+      <div class="col-2">
+        <img class= "rounded-circle" src="{{review.avatar_path}}">
+      </div>
+      <div class="col-10">
+        <div class="row">
+          <h4 class="card-text" id="createdby">A review created by {{review.author}}&nbsp;&nbsp;<span class="rating">&#9733;&nbsp;{{review.rating}}</span></h4>
+        </div>
+        <div class="row" style="margin-top: 2em;">
+          <span class="time text-muted"> Written by {{review.author}} on {{review.created_at_month}}&nbsp;{{review.created_at_date}},&nbsp;{{review.created_at_year}},&nbsp;{{review.created_at_time}}</span>
+        </div>
+        <br>
+        <div class="row">
+          <span class="reviewcontent">{{review.content}}</span>
+        </div>
+        <br>
+        <div class="row">
+          <a class="urllink" href="{{review.url}}">Read the rest</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+<span *ngIf="recmd();">
+    <div class="container">
+      <div class="row">
+        <span *ngIf="this.media_type == 'movie'">
+          <h3>Recommended Movies</h3>
+        </span>
+        <span *ngIf="this.media_type == 'tv'">
+          <h3>Recommended TV Shows</h3>
+        </span>
+      </div>
+      <br>
+      <span *ngIf="this.media_type == 'movie'">
+      <ngb-carousel [interval]=0>
+        <ng-template ngbSlide *ngFor="let values of recommended_array">
+          <div class="container">
+          <div class="row">
+          <div class="" *ngFor="let val of values">
+            <div class="col" id= "recommended" style="width: 10.5rem;">
+              <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+              <div class="carousel-caption" id="recommended-caption" style="width: 8.775rem;">
+                <p>{{val.title}}</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      </ngb-carousel>
+    </span>
+    <span *ngIf="this.media_type == 'tv'">
+      <ngb-carousel [interval]=0>
+        <ng-template ngbSlide *ngFor="let values of recommended_array">
+          <div class="container">
+          <div class="row">
+          <div class="" *ngFor="let val of values">
+            <div class="col" id= "recommended" style="width: 10.5rem;">
+              <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+              <div class="carousel-caption" id="recommended-caption" style="width: 8.775rem;">
+                <p>{{val.title}}</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      </ngb-carousel>
+    </span>
+    </div>
+  </span>
+  <span *ngIf="smlr();">
+  <div class="container">
+    <div class="row">
+      <span *ngIf="this.media_type == 'movie'">
+        <h3>Similar Movies</h3>
+      </span>
+      <span *ngIf="this.media_type == 'tv'">
+        <h3>Similar TV Shows</h3>
+      </span>
+    </div>
+    <br>
+    <span *ngIf="this.media_type == 'movie'">
+      <ngb-carousel [interval]=0>
+        <ng-template ngbSlide *ngFor="let values of similar_array">
+          <div class="container">
+          <div class="row">
+          <div class="" *ngFor="let val of values">
+            <div class="col" id= "similar" style="width: 10.5rem;">
+              <img class="card-img-top" [routerLink]="['/watch','movie',val.id]" [src]="val.poster_path" alt="Card image cap">
+              <div class="carousel-caption" id="similar-caption" style="width: 8.775rem;">
+                <p>{{val.title}}</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      </ngb-carousel>
+    </span>
+    <span *ngIf="this.media_type == 'tv'">
+    <ngb-carousel [interval]=0>
+      <ng-template ngbSlide *ngFor="let values of similar_array">
+        <div class="container">
+        <div class="row">
+        <div class="" *ngFor="let val of values">
+          <div class="col" id= "similar" style="width: 10.5rem;">
+            <img class="card-img-top" [routerLink]="['/watch','tv',val.id]" [src]="val.poster_path" alt="Card image cap">
+            <div class="carousel-caption" id="similar-caption" style="width: 8.775rem;">
+              <p>{{val.title}}</p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    </ngb-carousel>
+  </span>
+  </div>
+  </span>
+</div>
+  <!-- <modal> -->
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">{{cast_details?.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-4">
+              <img style="height:20em;width:13em"src="{{cast_details?.profile_path}}">
+            </div>
+            <div class="col-8">
+              <div *ngIf="cast_details?.birthday;">
+                Birth: {{cast_details?.birthday}}<br>
+              </div>
+              <div *ngIf="cast_details?.place_of_birth;">
+                Birth Place: {{cast_details?.place_of_birth}}<br>
+              </div>
+              <div *ngIf="cast_details?.gender;">
+                Gender: {{cast_details?.gender}}<br>
+              </div>
+              <div *ngIf="cast_details?.known_for_department;">
+                Known for: {{cast_details?.known_for_department}}<br>
+              </div>
+              <div *ngIf="cast_details?.also_known_as;">
+                Also Known as: {{cast_details?.also_known_as}}<br><br>
+              </div>
+              <br>
+              <span *ngIf="cast_externals?.imdb_id;">
+                <a target="_blank" href={{cast_externals?.imdb_id}}><img style="height: 8%; width:5%;" title="Visit IMDB" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwDJDcf3ggp48cpjrgf1nsTUPc6SPq3-CedfgK8Sgh61f0wf6gyPA6YJkiVERomfAGP3w&usqp=CAU" border=0></a>&nbsp;
+              </span>
+              <span *ngIf="cast_externals?.instagram_id;">
+                <a target="_blank" href={{cast_externals?.instagram_id}}><img style="height: 8%; width:5%;" title="Visit Instagram" src="https://www.pngitem.com/pimgs/m/461-4618525_ig-small-instagram-logo-2019-hd-png-download.png" border=0></a>&nbsp;
+              </span>
+              <span *ngIf="cast_externals?.facebook_id;">
+                <a target="_blank" href={{cast_externals?.facebook_id}}><img style="height: 8%; width:5%;" title="Visit Facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/facebook40x40.png" border=0></a>&nbsp;
+              </span>
+              <span *ngIf="cast_externals?.twitter_id;">
+                <a target="_blank" href={{cast_externals?.twitter_id}}><img style="height: 8%; width:5%;" title="Visit Twitter" src="https://c866088.ssl.cf3.rackcdn.com/assets/twitter40x40.png" border=0></a>&nbsp;
+              </span>
+
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <span *ngIf="cast_details?.biography;">
+                <h5>Biography</h5>
+                {{cast_details?.biography}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #longContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+  <!-- </modal> -->
+
+</div>
+</html>
+</span>

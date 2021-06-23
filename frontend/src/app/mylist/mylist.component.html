@@ -1,0 +1,46 @@
+<!-- Mobile version -->
+<span *ngIf="mobile_check === true;">
+    <!-- When there are items in the list -->
+    <span *ngIf="this.display_list.length>0;">
+        <div class="container" id="full-length">
+            <h1 id="content-heading">My WatchList</h1><br>
+                <div class="row"><br>
+                    <div class=""  id="space" *ngFor="let val of display_list">
+                        <div class="col-sm" id="list-card">
+                            <img class="card-img-top" [routerLink]="['/watch',val.media_type,val.id]" [src]="val.poster_path" alt="Card image cap">
+                            <div class="carousel-caption" id="list-card-caption">
+                                {{val.title}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </span>
+    <!-- When there are no items in the list -->
+    <span *ngIf="!(this.display_list.length>0)">
+        <h1 id="headline">No items found in <br> WatchList.</h1><br>
+    </span>
+</span>
+<!-- Desktop version -->
+<span *ngIf="mobile_check === false;">
+  <!-- When there are items in the list -->
+  <span *ngIf="this.display_list.length>0;">
+      <div class="container" id="full-length">
+          <h2 id="content-heading">My WatchList</h2><br>
+              <div class="row"><br>
+                  <div class=""  id="space" *ngFor="let val of display_list">
+                      <div class="col-sm" id="list-card" style="width: 11rem;">
+                          <img class="card-img-top" [routerLink]="['/watch',val.media_type,val.id]" [src]="val.poster_path" alt="Card image cap">
+                          <div class="carousel-caption" id="list-card-caption" style="width: 9.2rem;">
+                              {{val.title}}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      </div>
+  </span>
+  <!-- When there are no items in the list -->
+  <span *ngIf="!(this.display_list.length>0);">
+      <h2 id="headline">No items found in WatchList.</h2><br>
+  </span>
+</span>
